@@ -1,12 +1,13 @@
 import { FactoryProvider } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Redis } from 'ioredis';
 
 export const redisClientFactory: FactoryProvider<Redis> = {
     provide: 'RedisClient',
-    useFactory: () => {
+    useFactory: (configService: ConfigService) => {
         const redisInstance = new Redis({
-            host: 'localhost',
-            port: 6379,
+            host: configService.get('REDIS_HOST'),
+            port: configService.get('REDIS_PORT'),
         });
 
         redisInstance.on('error', e => {
@@ -15,5 +16,5 @@ export const redisClientFactory: FactoryProvider<Redis> = {
 
         return redisInstance;
     },
-    inject: [],
+    inject: [ConfigService],
 };
