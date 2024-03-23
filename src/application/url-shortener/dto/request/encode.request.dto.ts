@@ -7,6 +7,9 @@ export class EncodeRequestDto {
         example: 'https://example.com/this-is-a-very-long-url',
         required: true,
     })
-    @IsUrl()
+    @IsUrl({
+        require_protocol: true,
+        allow_underscores: true,
+    })
     readonly longUrl: string;
 }

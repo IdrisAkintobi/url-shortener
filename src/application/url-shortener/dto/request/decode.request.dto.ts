@@ -7,6 +7,9 @@ export class DecodeRequestDto {
         example: 'https://short.est/short1',
         required: true,
     })
-    @IsUrl()
+    @IsUrl({
+        require_protocol: true,
+        allow_underscores: true,
+    })
     readonly shortUrl: string;
 }
