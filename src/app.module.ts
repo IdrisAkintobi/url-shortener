@@ -5,7 +5,6 @@ import { ShortUrlController } from './application/url-shortener/url-shortener.co
 import { ShortUrlService } from './application/url-shortener/url-shortener.service';
 import { configValidationSchema } from './config/config.schema';
 import { DBModule } from './db/mongodb/db.module';
-import { RedisModule } from './db/redis/redis.module';
 import { Logger } from './utils/logger';
 
 @Module({
@@ -15,7 +14,6 @@ import { Logger } from './utils/logger';
             validationSchema: configValidationSchema,
             isGlobal: true,
         }),
-        RedisModule,
         DBModule,
     ],
     controllers: [ShortUrlController],

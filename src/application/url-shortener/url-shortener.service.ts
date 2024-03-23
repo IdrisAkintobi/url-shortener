@@ -1,8 +1,7 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import ShortUniqueId from 'short-unique-id';
 import { ShortUrlRepository } from '../../db/mongodb/repository/short-url.repository';
-import { RedisRepository } from '../../db/redis/redis.repository';
 import { ShortenedURLInterface } from '../../domain/interface/shortened.url.interface';
 
 @Injectable()
@@ -12,7 +11,6 @@ export class ShortUrlService {
     private readonly baseURL: string;
 
     constructor(
-        @Inject(RedisRepository) private readonly redisRepository: RedisRepository,
         private readonly shortUrlRepository: ShortUrlRepository,
         private readonly configService: ConfigService,
     ) {
