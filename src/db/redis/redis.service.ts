@@ -17,7 +17,7 @@ export class RedisService {
         const key = this.uuidGenerator.randomUUID();
         const data: shortenedURLInterface = {
             originalURL: url,
-            shortURL: `${this.baseURL}/${key}`,
+            shortURL: new URL(key, this.baseURL).toString(),
             accessCount: 0,
             createdAt: Date.now(),
             lastAccessedAt: Date.now(),
