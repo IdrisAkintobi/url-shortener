@@ -27,7 +27,7 @@ export class ShortUrlController {
     constructor(private readonly shortUrlService: ShortUrlService) {}
 
     @ApiBody({ type: EncodeRequestDto, description: 'Encode long url' })
-    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.CREATED)
     @Post('/encode')
     async encode(@Body() { longUrl }: EncodeRequestDto): Promise<HttpResponse<EncodeResponseDto>> {
         const response = await this.shortUrlService.encode(longUrl);
@@ -35,14 +35,14 @@ export class ShortUrlController {
     }
 
     @ApiBody({ type: DecodeRequestDto, description: 'Decode short url' })
-    @HttpCode(HttpStatus.NO_CONTENT)
-    @Get('/decode')
+    @HttpCode(HttpStatus.OK)
+    @Post('/decode')
     async decode(@Body() { shortUrl }: DecodeRequestDto): Promise<HttpResponse<DecodeResponseDto>> {
         const response = await this.shortUrlService.decode(shortUrl);
         return HttpResponseMapper.map(response);
     }
 
-    @HttpCode(HttpStatus.NO_CONTENT)
+    @HttpCode(HttpStatus.OK)
     @Get('/statistic/:path')
     async statistic(
         @Param() { path }: StatisticRequestDto,

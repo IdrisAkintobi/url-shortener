@@ -13,7 +13,7 @@ async function bootstrap() {
             logger: true,
         }),
     );
-    app.useGlobalPipes(new ValidationPipe({ transform: true, validateCustomDecorators: true }));
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
     const configService = app.get(ConfigService);
     const port = configService.get('APP_PORT');
     await app.listen(port);

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ShortUrlRepository } from './repository/short-url.repository';
 import { ShortUrl, ShortUrlSchema } from './schemas/short-url.schema';
@@ -13,7 +13,6 @@ import { ShortUrl, ShortUrlSchema } from './schemas/short-url.schema';
             inject: [ConfigService],
         }),
         MongooseModule.forFeature([{ name: ShortUrl.name, schema: ShortUrlSchema }]),
-        ConfigModule.forRoot(),
     ],
     providers: [ShortUrlRepository],
     exports: [ShortUrlRepository],
