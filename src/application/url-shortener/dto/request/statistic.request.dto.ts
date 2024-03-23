@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUrl } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class StatisticRequestDto {
     @ApiProperty({
@@ -7,6 +7,6 @@ export class StatisticRequestDto {
         example: 'short1',
         required: true,
     })
-    @IsUrl()
+    @IsString()
     readonly path: string;
 }
