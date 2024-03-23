@@ -14,23 +14,11 @@ export class RedisRepository implements OnModuleDestroy, RedisRepositoryInterfac
     }
 
     async get(key: string): Promise<string | null> {
-        const record = await this.redisClient.get(key);
-        if (!record) return null;
-        // Update record access count and last accessed time
-        const updatedRecord = this.updateRecord(record);
-        await this.set(key, updatedRecord);
-        return JSON.parse(updatedRecord);
+        return this.redisClient.get(key);
     }
 
     async set(key: string, value: string): Promise<void> {
         // Expiry is set to 30 day
         await this.redisClient.set(key, value, 'EX', thirtyDaysInSeconds);
-    }
-
-    private updateRecord(record: string) {
-        const parsedRecord = JSON.parse(record);
-        parsedRecord.accessCount += 1;
-        parsedRecord.lastAccessedAt = Date.now();
-        return JSON.stringify(parsedRecord);
     }
 }
