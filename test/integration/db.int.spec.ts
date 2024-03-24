@@ -2,7 +2,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
-import { ShortUrlService } from '../../src/application/url-shortener/url-shortener.service';
 import { DBModule } from '../../src/db/mongodb/db.module';
 import { ShortUrlRepository } from '../../src/db/mongodb/repository/short-url.repository';
 import { ShortUrl } from '../../src/db/mongodb/schemas/short-url.schema';
@@ -12,7 +11,6 @@ describe('ShortUrlController E2E', () => {
     let repository: ShortUrlRepository;
     let model: Model<any>;
     let testingModule: TestingModule;
-    // let shortUrlService: ShortUrlService;
     const data = {
         id: '1',
         longUrl: 'https://example.com/this-is-a-very-long-url',
@@ -22,7 +20,6 @@ describe('ShortUrlController E2E', () => {
     beforeAll(async () => {
         testingModule = await Test.createTestingModule({
             imports: [ConfigModule.forRoot({ isGlobal: true }), DBModule],
-            providers: [ShortUrlService],
         })
             .overrideProvider(ConfigService)
             .useValue(configServiceMock)
@@ -30,7 +27,6 @@ describe('ShortUrlController E2E', () => {
 
         repository = testingModule.get<ShortUrlRepository>(ShortUrlRepository);
         model = testingModule.get<Model<any>>(getModelToken(ShortUrl.name));
-        // shortUrlService = testingModule.get<ShortUrlService>(ShortUrlService);
     });
 
     afterAll(async () => {
