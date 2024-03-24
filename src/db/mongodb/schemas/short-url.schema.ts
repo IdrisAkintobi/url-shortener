@@ -12,8 +12,8 @@ export class ShortUrl extends Document {
     @Prop()
     shortUrl: string;
 
-    @Prop({ default: Date.now })
-    createdAt: Date;
+    @Prop({ default: new Date().toISOString() })
+    createdAt: string;
 
     @Prop({ default: 0 })
     accessCount: number;

@@ -11,7 +11,7 @@ export class StatisticResponseDto {
 
     @ApiProperty({
         description: 'The short url',
-        example: 'https://short.est/short1',
+        example: 'https://short.est/abc123',
     })
     @IsUrl()
     shortUrl: string;
