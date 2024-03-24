@@ -18,7 +18,7 @@ export class ShortUrl extends Document {
     @Prop({ default: 0 })
     accessCount: number;
 
-    @Prop()
+    @Prop({ default: new Date().toISOString() })
     lastAccessedAt: string;
 }
 
@@ -29,14 +29,4 @@ ShortUrlSchema.set('toObject', {
         delete ret._id;
         delete ret.id;
     },
-});
-
-// increment access count and update lastAccessedAt on find() call.
-ShortUrlSchema.pre('findOne', async function () {
-    const filter = this.getFilter();
-    const update = {
-        $inc: { accessCount: 1 },
-        $set: { lastAccessedAt: new Date().toISOString() },
-    };
-    await this.model.findOneAndUpdate(filter, update);
 });
