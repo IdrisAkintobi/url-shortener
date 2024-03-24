@@ -4,7 +4,7 @@ import { IsUrl } from 'class-validator';
 export class DecodeRequestDto {
     @ApiProperty({
         description: 'The short url to decode',
-        example: 'https://short.est/short1',
+        example: 'https://short.est/abc123',
         required: true,
     })
     @IsUrl({

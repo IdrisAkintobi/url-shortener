@@ -31,10 +31,6 @@ describe('ShortUrlService', () => {
         service = module.get<ShortUrlService>(ShortUrlService);
     });
 
-    it('should be defined', () => {
-        expect(service).toBeDefined();
-    });
-
     describe('encode', () => {
         it('should return a shortened URL', async () => {
             shortUrlRepositoryMock.create.mockResolvedValueOnce({ shortUrl });

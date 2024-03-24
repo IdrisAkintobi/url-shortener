@@ -26,10 +26,6 @@ describe('ShortUrlController', () => {
         controller = module.get<ShortUrlController>(ShortUrlController);
     });
 
-    it('should be defined', () => {
-        expect(controller).toBeDefined();
-    });
-
     describe('encode', () => {
         it('should encode a long URL', async () => {
             const expected: EncodeResponseDto = { shortUrl: 'abc123' };
