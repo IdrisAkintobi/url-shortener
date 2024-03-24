@@ -4,7 +4,7 @@ import { WinstonModule } from 'nest-winston';
 import { ShortUrlController } from './application/url-shortener/url-shortener.controller';
 import { ShortUrlService } from './application/url-shortener/url-shortener.service';
 import { configValidationSchema } from './config/config.schema';
-import { RedisModule } from './db/redis/redis.module';
+import { DBModule } from './db/mongodb/db.module';
 import { Logger } from './utils/logger';
 
 @Module({
@@ -14,7 +14,7 @@ import { Logger } from './utils/logger';
             validationSchema: configValidationSchema,
             isGlobal: true,
         }),
-        RedisModule,
+        DBModule,
     ],
     controllers: [ShortUrlController],
     providers: [ShortUrlService],
