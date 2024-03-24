@@ -20,4 +20,12 @@ export class ShortUrlRepository {
     async findByLongUrl(longUrl: string): Promise<ShortUrl> {
         return this.shortUrlModel.findOne({ longUrl }).exec();
     }
+
+    async updateAccessCount(id: string): Promise<void> {
+        const update = {
+            $inc: { accessCount: 1 },
+            $set: { lastAccessedAt: new Date().toISOString() },
+        };
+        await this.shortUrlModel.findOneAndUpdate({ id }, update);
+    }
 }

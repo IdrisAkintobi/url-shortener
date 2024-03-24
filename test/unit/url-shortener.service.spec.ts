@@ -50,7 +50,7 @@ describe('ShortUrlService', () => {
 
         it('should throw NotFoundException if URL is not found', async () => {
             shortUrlRepositoryMock.findById.mockResolvedValueOnce(null);
-            await expect(service.decode(shortUrl)).rejects.toThrowError(NotFoundException);
+            await expect(service.decode(shortUrl)).rejects.toThrow(NotFoundException);
         });
     });
 

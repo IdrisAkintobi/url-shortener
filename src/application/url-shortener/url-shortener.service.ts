@@ -37,6 +37,7 @@ export class ShortUrlService {
         if (!shortenedURL) throw new NotFoundException();
 
         // Update record access count and last accessed time
+        await this.shortUrlRepository.updateAccessCount(key);
         return { longUrl: shortenedURL.longUrl };
     }
 
