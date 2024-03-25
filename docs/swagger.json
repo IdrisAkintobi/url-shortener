@@ -1,0 +1,118 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/v1/encode": {
+            "post": {
+                "operationId": "ShortUrlController_encode",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "description": "Encode long url",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EncodeRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "url-shortener"
+                ]
+            }
+        },
+        "/v1/decode": {
+            "post": {
+                "operationId": "ShortUrlController_decode",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "description": "Decode short url",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DecodeRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "url-shortener"
+                ]
+            }
+        },
+        "/v1/statistic/{path}": {
+            "get": {
+                "operationId": "ShortUrlController_statistic",
+                "parameters": [
+                    {
+                        "name": "path",
+                        "required": true,
+                        "in": "path",
+                        "description": "The short url path to get it statistic",
+                        "example": "abc123",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "url-shortener"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "url-shortener",
+        "description": "API to shorten long url",
+        "version": "0.0.1",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "EncodeRequestDto": {
+                "type": "object",
+                "properties": {
+                    "longUrl": {
+                        "type": "string",
+                        "description": "The long url to encode",
+                        "example": "https://example.com/this-is-a-very-long-url"
+                    }
+                },
+                "required": [
+                    "longUrl"
+                ]
+            },
+            "DecodeRequestDto": {
+                "type": "object",
+                "properties": {
+                    "shortUrl": {
+                        "type": "string",
+                        "description": "The short url to decode",
+                        "example": "https://short.est/abc123"
+                    }
+                },
+                "required": [
+                    "shortUrl"
+                ]
+            }
+        }
+    }
+}
