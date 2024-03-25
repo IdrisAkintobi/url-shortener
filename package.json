@@ -1,10 +1,10 @@
 {
     "name": "url-shortener",
     "version": "0.0.1",
-    "description": "",
+    "description": "API to shorten long url",
     "author": "",
     "private": true,
-    "license": "UNLICENSED",
+    "license": "MIT",
     "scripts": {
         "build": "nest build",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -20,7 +20,7 @@
         "test:e2e": "jest --testRegex=.e2e-spec.ts$",
         "test:int": "jest --testRegex=.int.spec.ts$",
         "lint-staged": "lint-staged",
-        "prepare": "husky"
+        "doc:swagger": "WAIT_FOR_DESTROY=false ts-node ./docs/swagger.ts"
     },
     "lint-staged": {
         "*.{js,ts}": [
@@ -29,6 +29,7 @@
         ]
     },
     "dependencies": {
+        "@nestjs/cli": "^10.3.2",
         "@nestjs/common": "^10.0.0",
         "@nestjs/config": "^3.2.0",
         "@nestjs/core": "^10.0.0",
@@ -46,7 +47,6 @@
         "winston": "^3.12.0"
     },
     "devDependencies": {
-        "@nestjs/cli": "^10.0.0",
         "@nestjs/schematics": "^10.0.0",
         "@nestjs/testing": "^10.0.0",
         "@types/express": "^4.17.17",
