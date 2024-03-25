@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+    mongodb:
+        image: mongo
+        ports:
+            - '27017:27017'
+        command: mongod --quiet --logpath /dev/null
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+            interval: 10s
+            timeout: 2s
+            retries: 5
+            start_period: 5s
+        restart: always
+        volumes:
+            - mongodata:/data/db
+        networks:
+            - url-shortener-network
+
+    url-shortener:
+        build:
+            context: .
+        environment:
+            - MONGO_URI=mongodb://mongodb:27017/short-url
+        env_file:
+            - .env
+        ports:
+            - '${PORT}:${PORT}'
+        depends_on:
+            - mongodb
+        volumes:
+            - node_modules:/node_modules
+        networks:
+            - url-shortener-network
+
+networks:
+    url-shortener-network:
+        driver: bridge
+
+volumes:
+    mongodata:
+    node_modules:
