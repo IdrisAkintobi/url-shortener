@@ -1,15 +1,16 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getModelToken } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { getConnectionToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Model } from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection } from 'mongoose';
 import { DBModule } from '../../src/db/mongodb/db.module';
 import { ShortUrlRepository } from '../../src/db/mongodb/repository/short-url.repository';
-import { ShortUrl } from '../../src/db/mongodb/schemas/short-url.schema';
-import { configServiceMock } from '../mock/config.service.mock';
+
+let mongod: MongoMemoryServer;
 
 describe('ShortUrlController E2E', () => {
+    let connection: Connection;
     let repository: ShortUrlRepository;
-    let model: Model<any>;
     let testingModule: TestingModule;
     const data = {
         id: '1',
@@ -18,19 +19,21 @@ describe('ShortUrlController E2E', () => {
     };
 
     beforeAll(async () => {
+        mongod = await MongoMemoryServer.create();
+        //set mongo uri for test environment
+        process.env.MONGO_URI = mongod.getUri();
+
         testingModule = await Test.createTestingModule({
             imports: [ConfigModule.forRoot({ isGlobal: true }), DBModule],
-        })
-            .overrideProvider(ConfigService)
-            .useValue(configServiceMock)
-            .compile();
+        }).compile();
 
         repository = testingModule.get<ShortUrlRepository>(ShortUrlRepository);
-        model = testingModule.get<Model<any>>(getModelToken(ShortUrl.name));
+        connection = await testingModule.get(getConnectionToken());
     });
 
     afterAll(async () => {
-        await model.deleteMany({});
+        await connection.close();
+        await mongod.stop();
         await testingModule.close();
     });
 

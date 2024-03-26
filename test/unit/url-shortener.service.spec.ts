@@ -4,7 +4,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ShortUrlService } from '../../src/application/url-shortener/url-shortener.service';
 import { ShortUrlRepository } from '../../src/db/mongodb/repository/short-url.repository';
 import { ShortenedUrlBuilder } from '../builder/product.builder';
-import { configServiceMock } from '../mock/config.service.mock';
 import { shortUrlRepositoryMock } from '../mock/short-url.repository.mock';
 
 // Mock ShortUniqueId class
@@ -19,12 +18,15 @@ describe('ShortUrlService', () => {
     const key = 'abc123';
     const { longUrl, shortUrl, id } = new ShortenedUrlBuilder().withId(key).build();
 
+    // set env variable
+    process.env.BASE_URL = 'https://short.est';
+
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 ShortUrlService,
                 { provide: ShortUrlRepository, useValue: shortUrlRepositoryMock },
-                { provide: ConfigService, useValue: configServiceMock },
+                ConfigService,
             ],
         }).compile();
 
